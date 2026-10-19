@@ -1,79 +1,110 @@
-# TaskCampus - Aprendizaje React + Vite
+# TaskCampus - Gestor de Tareas Académicas
 
-**Estudiante:** Charloth Salgado  
-**Asignatura:** Desarrollo de Aplicaciones Web  
-**Framework:** React + Vite
-
----
-
-## 📋 Descripción del Proyecto
-
-TaskCampus es una aplicación web diseñada para la gestión de tareas académicas. El objetivo de este proyecto es poner en práctica el uso de **React** mediante componentes reutilizables, hooks personalizados, consumo de APIs REST y enrutamiento de vistas.
-
-La aplicación permite:
-
--  Crear tareas
--  Listar tareas
--  Filtrar tareas por estado
--  Actualizar tareas
--  Eliminar tareas
+**Estudiante:** Charloth Salgado
+**Asignatura:** Desarrollo de Aplicaciones Web
 
 ---
 
-## ✨ Características
+## 📖 Descripción y Comparación (Base vs Desarrollo)
 
-- **CRUD de tareas:** gestión completa (crear, leer, actualizar y eliminar).
-- **Consumo de API:** integración con la API pública de [JSONPlaceholder](https://jsonplaceholder.typicode.com/) usando `fetch`.
-- **Componentes reutilizables:** tarjetas, botones, modales y badges.
-- **Filtros dinámicos:** filtrado de tareas por estado (*Todas, Pendientes, Completadas*).
-- **Navegación:** múltiples vistas implementadas con `react-router-dom`.
+El proyecto base proporcionado era una interfaz estática en React con 3 tareas escritas directamente en el JSX, botones que solo ejecutaban alertas y un resumen que recibía un número fijo.
 
----
+### Desarrollo realizado en este laboratorio:
+
+- Se eliminaron las tareas estáticas, cargando **10 tareas desde la API JSONPlaceholder** (GET).
+- Se implementó **CRUD completo**: Crear (POST), Actualizar (PUT/PATCH), Eliminar (DELETE) y toggle de estado.
+- Se centralizó el estado en el hook `useTareas` y las peticiones HTTP en `tareasService.js`.
+- Se implementaron **3 vistas** navegables mediante `useState` (Resumen, Tareas, Nueva Tarea).
+- Se agregaron **filtros** (Todas, Pendientes, Completadas), **búsqueda textual** en tiempo real y un **resumen dinámico** con contadores derivados.
+- Se implementó **validación en formularios**, **modal de confirmación**, y **edición en línea** (doble clic).
+
+## ⚠️ Limitaciones de la API Simulada
+
+Se utiliza **JSONPlaceholder**, una API REST falsa. Las operaciones de escritura (POST, PUT, DELETE) son simuladas y devuelven un código HTTP 200/201 exitoso, pero **los cambios no persisten en el servidor real**. Al recargar la página (F5), la aplicación vuelve a hacer un GET y trae las 10 tareas originales de la API. Esta limitación es el comportamiento esperado según los tutoriales y el enunciado.
 
 ## 🛠️ Tecnologías Utilizadas
 
-| Tecnología | Descripción |
+- **React** (Hooks: `useState`, `useEffect`, custom hooks)
+- **Vite** (Entorno de desarrollo)
+- **CSS Tradicional** (Centralizado en `App.css`)
+
+## ⚙️ Requisitos Previos
+
+- Node.js (Versión: v20.x.x o superior)
+- npm (Versión: 10.x.x o superior)
+
+## 🚀 Instalación y Ejecución
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/TU_USUARIO/taskcampus.git
+   ```
+
+2. **Entrar al directorio:**
+   ```bash
+   cd taskcampus
+   ```
+
+3. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+4. **Ejecutar en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Compilar para producción:**
+   ```bash
+   npm run build
+   ```
+
+## 📁 Estructura del Proyecto
+
+| Archivo/Carpeta | Descripción |
 |---|---|
-| **React** | Componentes funcionales y Hooks |
-| **Vite** | Entorno de desarrollo y build |
-| **React Router DOM** | Navegación entre vistas |
-| **CSS puro** | Estilos centralizados |
-| **JSONPlaceholder** | API REST de pruebas |
+| `src/App.jsx` | Componente principal, maneja `vistaActiva` y estado global de filtros. |
+| `src/views/` | Vistas de la aplicación (ResumenView, TareasView, NuevaView). |
+| `src/components/` | Componentes reutilizables (Button, Card, Modal, TaskItem, TaskList, etc.). |
+| `src/hooks/useTareas.js` | Hook personalizado que encapsula toda la lógica de estado y operaciones CRUD. |
+| `src/services/tareasService.js` | Capa de comunicación HTTP con `fetch` hacia JSONPlaceholder. |
 
+## 🔬 Investigación Aplicada
 
+### 1. Navegación entre vistas
 
-## ⚙️ Instalación y Ejecución
+- **Explicación:** Se utilizó `useState` para controlar la vista activa y renderizado condicional sin usar librerías externas.
+- **Archivos:** `src/App.jsx`, `src/components/Header.jsx`.
+- **Verificación:** Al cambiar entre Resumen, Tareas y Nueva Tarea, los datos y filtros no se reinician porque el estado vive en `App.jsx`.
 
-### Requisitos previos
+### 2. Estado derivado
 
-El proyecto se puede clonar desde GitHub. Para su correcta ejecución se necesita instalar:
+- **Explicación:** Los contadores del resumen y la lista filtrada se calculan directamente desde el array `tareas` original, sin guardar copias en variables de estado independientes.
+- **Archivos:** `src/App.jsx`.
+- **Verificación:** Al completar una tarea, el resumen actualiza pendientes/completadas automáticamente.
 
-- **Node.js** (versión LTS recomendada)
-- **npm** *(se instala automáticamente con Node.js)*
-- **react-router-dom**
+### 3. Actualización funcional del estado
 
-### Instalar dependencias
+- **Explicación:** Se usa el patrón `setTareas(prev => ...)` para actualizar el estado basándose en el valor anterior seguro, evitando mutaciones directas.
+- **Archivos:** `src/hooks/useTareas.js`.
+- **Verificación:** Al agregar o eliminar, la lista se actualiza sin reemplazar datos antiguos.
 
-```bash
-npm install
-npm install react-router-dom
-```
+### 4. Identificadores y API simulada
 
-### Ejecurar el Servidor de desarrollo
-` npm run dev `
+- **Explicación:** Al crear una tarea (POST), JSONPlaceholder siempre devuelve `id: 201`, causando conflictos de claves. Se solucionó forzando un **ID local único con `Date.now()`**.
+- **Archivos:** `src/hooks/useTareas.js`.
+- **Verificación:** Crear 2 tareas seguidas no rompe el renderizado (claves únicas estables).
 
-### Abrir en el navegador
-La terminal te mostrará una URL local (generalmente http://localhost:5173/). Haz clic o pégala en tu navegador.
+## 🧪 Evidencias de Verificación (Casos de Prueba)
 
-# Estructura del Proyecto
-```bash
-src
-├── App.css
-├── App.jsx
-├── assets
-├── components      # Componentes reutilizables de la interfaz
-├── hooks           # Lógica de estado y API (useTareas.js)
-├── index.css
-├── main.jsx
-└── services        # Comunicación HTTP con la API REST (tareasService.js)
-```
+| Caso Probado | Pasos | Resultado Esperado | Resultado Obtenido |
+|---|---|---|---|
+| Carga inicial | Abrir app en `/` | 10 tareas cargadas vía GET | ✅ Exitoso |
+| Crear tarea | Ir a "Nueva", escribir 5+ caracteres, enviar | Tarea nueva al inicio de la lista | ✅ Exitoso |
+| Validación | Intentar crear tarea con < 5 caracteres | Mensaje de error en rojo | ✅ Exitoso |
+| Editar título | Doble clic en título, cambiar texto, presionar Enter | Título actualizado en la lista | ✅ Exitoso |
+| Eliminar | Clic en "Eliminar", abrir modal, confirmar | Tarea desaparece de la lista | ✅ Exitoso |
+| Filtrar | Clic en "Pendientes" | Solo muestra tareas no completadas | ✅ Exitoso |
+| Buscar | Escribir texto en buscador | Lista se filtra sin distinguir mayúsculas | ✅ Exitoso |
+| Navegación | Cambiar entre vistas | No se pierden tareas ni filtros de sesión | ✅ Exitoso |
