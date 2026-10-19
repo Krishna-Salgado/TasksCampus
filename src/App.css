@@ -1,0 +1,108 @@
+/* Reset y base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  background-color: #f5f3ff; /* Fondo morado muy claro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  color: #1e1b4b; /* Texto base morado oscuro */
+}
+
+/* Contenedor Principal */
+.app-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e9d5ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.1);
+}
+
+/* Header */
+.header { text-align: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #7c3aed; }
+.header h1 { color: #6d28d9; font-size: 2.5rem; }
+.header p { color: #6b7280; margin-top: 0.5rem; }
+
+/* Navegación */
+.main-nav { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
+.nav-link { 
+  color: #6d28d9; 
+  font-weight: bold; 
+  padding: 0.5rem 1.2rem; 
+  border-radius: 6px; 
+  background: #ede9fe; 
+  border: none; 
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.nav-link:hover { background: #ddd6fe; }
+.nav-link.active { background: #6d28d9; color: white; }
+
+/* Tarjetas */
+.card { background: #ffffff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(124, 58, 237, 0.05); }
+.section-title { color: #6d28d9; font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #e9d5ff; padding-bottom: 0.5rem; }
+
+/* Resumen (Stats) */
+.summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.stat { display: flex; flex-direction: column; align-items: center; background: #f5f3ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 1.2rem 1rem; transition: transform 0.2s; }
+.stat:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(124, 58, 237, 0.1); }
+.stat strong, .stat .stat-num { font-size: 2.2rem; color: #6d28d9; margin-bottom: 0.25rem; }
+.stat span { color: #6b7280; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Resumen: Formato de fracción */
+.stat-highlight { background: #ede9fe !important; border-color: #c4b5fd !important; }
+.stat-fraction { display: flex; align-items: baseline; gap: 4px; margin-bottom: 0.25rem; }
+.stat-fraction .numerator { font-size: 2.2rem; font-weight: bold; color: #6d28d9; line-height: 1; }
+.stat-fraction .denominator { font-size: 1.2rem; font-weight: bold; color: #8b5cf6; }
+
+/* Controles de Lista (Filtros + Búsqueda) */
+.list-controls { background: #f5f3ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e9d5ff; }
+.list-controls .filtros-container { justify-content: flex-start; margin-bottom: 1rem; }
+.filtros-container { display: flex; gap: 1rem; margin-bottom: 1rem; justify-content: center; }
+
+/* Formularios e Inputs */
+.task-form { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+.task-form .form-input { width: 100%; box-sizing: border-box; }
+.form-input { flex: 1; padding: 0.75rem 1rem; border: 1px solid #d8b4fe; border-radius: 6px; font-size: 1rem; background: #faf5ff; }
+.form-input:focus { outline: none; border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
+.search-input { margin-bottom: 0; border-color: #c4b5fd; background: #ffffff; width: 100%; box-sizing: border-box; }
+.edit-input { padding: 0.3rem; font-size: 1rem; width: 100%; margin-bottom: 0.5rem; box-sizing: border-box; border: 1px solid #d8b4fe; border-radius: 4px; }
+
+/* Botones Base (Estilo Morado/Indigo) */
+.btn { padding: 0.6rem 1.2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; background: #7c3aed; transition: opacity 0.2s, background 0.2s; }
+.btn:hover { opacity: 0.9; }
+.btn-primary { background: #6d28d9; }
+.btn-success { background: #0d9488; } /* Turquesa/Cian */
+.btn-danger { background: #db2777; } /* Magenta/Rosa */
+.btn-secondary { background: #a78bfa; }
+.btn.active { outline: 2px solid #6d28d9; outline-offset: 2px; background: #5b21b6; }
+
+/* Contadores en botones */
+.btn-count { background: rgba(255, 255, 255, 0.3); padding: 0.1rem 0.5rem; border-radius: 12px; font-size: 0.8rem; font-weight: bold; margin-left: 0.5rem; }
+.btn.active .btn-count { background: rgba(255, 255, 255, 0.4); color: white; }
+
+/* Lista y Items */
+.task-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.task-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 6px; }
+.task-content { display: flex; flex-direction: column; gap: 0.25rem; }
+.task-title { font-weight: 500; color: #1e1b4b; }
+.task-title.completed { text-decoration: line-through; color: #9ca3af; }
+.task-actions { display: flex; gap: 0.5rem; }
+
+/* Badges */
+.badge { padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+.badge-success { background: #cffafe; color: #0e7490; } /* Turquesa claro */
+.badge-warning { background: #ede9fe; color: #6d28d9; } /* Morado claro */
+
+/* Estado vacío */
+.empty-state { text-align: center; padding: 2rem; color: #6b7280; }
+.empty-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+/* Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(30, 27, 75, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.modal-content { max-width: 400px; width: 90%; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; }
+
+/* Errores y Éxitos */
+.error-msg { color: #be185d; font-weight: bold; text-align: center; padding: 2rem; }
+.error-form { color: #be185d; font-size: 0.85rem; margin-top: 0.5rem; text-align: left; }
+.success-form { color: #0d9488; font-size: 0.85rem; margin-top: 0.5rem; text-align: left; font-weight: bold; }
